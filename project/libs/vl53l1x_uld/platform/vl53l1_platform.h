@@ -20,6 +20,10 @@
 
 #include "vl53l1_types.h"
 
+// ChibiOS includes
+#include "ch.h"
+#include "hal.h"
+
 #ifdef __cplusplus
 extern "C"
 {
@@ -30,6 +34,15 @@ typedef struct {
 } VL53L1_Dev_t;
 
 typedef VL53L1_Dev_t *VL53L1_DEV;
+
+// TEST
+#define VL53L1X_I2C_ADDR (0x29) // Default I2C address of VL53L1X
+
+// TEST
+// Forward declaration of I2C configuration
+extern I2CDriver *VL53L1X_I2C_DRIVER;
+
+
 
 /** @brief VL53L1_WriteMulti() definition.\n
  * To be implemented by the developer

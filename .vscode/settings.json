@@ -3,5 +3,8 @@
     "settings.project.svdFile": "${workspaceFolder}/project/STM32L4x2.svd", // (Optional) .svd file (e.g. "/workspace/project7STM32F401.svd")
     "settings.openocd.interface": "interface/stlink.cfg", // OpenOCD Debugger interface file (e.g. "interface/stlink.cfg")
     "settings.openocd.board": "board/st_nucleo_l4.cfg", // (Optional) OpenOCD Board file (e.g. "board/st_nucleo_f4.cfg") (NB! If removed, remove in launch.json and tasks.json aswell)
-    "settings.project.deviceSeries": "STM32L4", // Chip family name (e.g. "STM32F4") (TODO: check if it should be target/stm32f4x.cfg instead?)
+    "settings.project.deviceSeries": "STM32L4",
+    "files.associations": {
+        "time.h": "c"
+    }, // Chip family name (e.g. "STM32F4") (TODO: check if it should be target/stm32f4x.cfg instead?)
 }

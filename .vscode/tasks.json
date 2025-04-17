@@ -69,6 +69,22 @@
             "detail": "Flash the build file(s) to the chip"
         },
         {
+            "label": "listen serial communication",
+            "type": "shell",
+            "command": "bash -c 'DEVICES=($(ls /dev/serial/by-id/ 2>/dev/null | xargs -I {} readlink -f /dev/serial/by-id/{} | grep -E \"ttyUSB[0-9]+|ttyACM[0-9]+\")); if [ ${#DEVICES[@]} -eq 0 ]; then echo \"No ttyUSB or ttyACM devices found\"; exit 1; fi; echo \"Available devices:\"; for i in ${!DEVICES[@]}; do echo \"$i: ${DEVICES[$i]}\"; done; echo \"Select device (0-$((${#DEVICES[@]}-1))):\"; read DEV_INDEX; if ! [[ \"$DEV_INDEX\" =~ ^[0-9]+$ ]] || [ \"$DEV_INDEX\" -ge ${#DEVICES[@]} ] || [ \"$DEV_INDEX\" -lt 0 ]; then echo \"Invalid selection\"; exit 1; fi; minicom -D ${DEVICES[$DEV_INDEX]} -b ${BAUD_RATE}'",
+            "problemMatcher": [],
+            "presentation": {
+              "echo": true,
+              "reveal": "always",
+              "panel": "shared"
+            },
+            "options": {
+              "env": {
+                "BAUD_RATE": "${input:baudRate}"
+              }
+            }
+        },
+        {
             "label": "rebuild",
             "dependsOn": [
                 "clean",
@@ -94,6 +110,20 @@
             },
             "detail": "Rebuild (clean and build) and flash the project to the chip"
         },
+        {
+            "label": "rebuild, flash, and listen",
+            "dependsOn": [
+                "clean",
+                "build",
+                "flash",
+                "listen serial communication"
+            ],
+            "dependsOrder": "sequence",
+            "group": {
+                "kind": "build"
+            },
+            "detail": "Rebuild, flash, and listen to the serial communcation"
+        },
 
         // Task(s) for Windows Host OS
 
@@ -113,6 +143,20 @@
         }
 
 
+    ],
+
+    // Input(s)
+
+    "inputs": [
+
+        // Baud Rate used for "listen serial communication"
+        {
+            "id": "baudRate",
+            "type": "pickString",
+            "description": "Select baud rate",
+            "options": ["9600", "115200", "57600"],
+            "default": "115200"
+        }
     ]
 }
 

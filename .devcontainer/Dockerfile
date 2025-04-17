@@ -26,6 +26,9 @@ RUN apt-get install openocd -y
 # gdb - GNU project Debugger. https://packages.ubuntu.com/noble/gdb
 RUN apt-get install gdb-multiarch -y
 
+# Serial Communication Tool(s)
+RUN apt-get install minicom -y
+
 # Clean up
 RUN rm -rf /var/lib/apt/lists/*
 
